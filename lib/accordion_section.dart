@@ -45,6 +45,8 @@ class AccordionSection extends StatelessWidget with CommonParams {
   /// Callback functionf or when a section closes
   final Function? onCloseSection;
 
+  final FutureOr<bool> Function()? canOpen;
+
   /// The text to be displayed in the header
   final Widget header;
 
@@ -78,6 +80,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
     SectionHapticFeedback? sectionOpeningHapticFeedback,
     SectionHapticFeedback? sectionClosingHapticFeedback,
     String? accordionId,
+    this.canOpen,
     this.onOpenSection,
     this.onCloseSection,
   }) : super(key: key) {
@@ -190,10 +193,13 @@ class AccordionSection extends StatelessWidget with CommonParams {
               top: Radius.circular(borderRadius),
               bottom: Radius.circular(_isOpen ? 0 : borderRadius),
             ),
-            onTap: () {
+            onTap: () async {
               final listCtrl = Get.put(ListController(), tag: accordionId);
 
-              listCtrl.updateSections(uniqueKey);
+              if ((!_isOpen && (await canOpen?.call() ?? true)) || _isOpen) {
+                listCtrl.updateSections(uniqueKey);
+              }
+
               _playHapticFeedback(_isOpen);
 
               if (_isOpen &&

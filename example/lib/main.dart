@@ -91,6 +91,16 @@ class AccordionPage extends StatelessWidget //__
               content: const MyDataTable(),
             ),
             AccordionSection(
+              isOpen: true,
+              contentVerticalPadding: 20,
+              leftIcon: const Icon(Icons.text_fields_rounded, color: Colors.white),
+              header: const Text('Should Not Open', style: headerStyle),
+              content: const Text(loremIpsum, style: contentStyle),
+              canOpen: () {
+                return false;
+              },
+            ),
+            AccordionSection(
               isOpen: false,
               leftIcon:
                   const Icon(Icons.circle_outlined, color: Colors.black54),

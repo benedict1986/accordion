@@ -207,6 +207,7 @@ class Accordion extends StatelessWidget with CommonParams {
             accordionId: accordionId,
             onOpenSection: child.onOpenSection,
             onCloseSection: child.onCloseSection,
+            canOpen: child.canOpen,
           ),
         );
       },
